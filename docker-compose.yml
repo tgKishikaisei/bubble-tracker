@@ -1,0 +1,40 @@
+services:
+  api:
+    build:
+      context: ./bubble-api
+    ports:
+      # Порт 8000 открыт для прямого доступа при разработке (не обязателен в production)
+      - "127.0.0.1:8000:8000"
+    volumes:
+      # Монтируем папку с результатами работы Python-скрипта (только чтение)
+      - ./bubble_results:/app/data:ro
+    environment:
+      - DATA_DIR=/app/data
+    restart: unless-stopped
+    networks:
+      - bubble-net
+    # Healthcheck: контейнер ui будет ждать готовности api
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  ui:
+    build:
+      context: ./bubble-dashboard-ui
+    ports:
+      - "127.0.0.1:3000:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - bubble-net
+
+# Общая сеть для межсервисного взаимодействия
+# Nginx внутри ui контейнера резолвит "api" как имя хоста API-сервиса
+networks:
+  bubble-net:
+    driver: bridge

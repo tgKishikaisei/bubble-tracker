@@ -1,0 +1,45 @@
+/*
+ * App.css — Bubble Tracker PRO Dashboard
+ * Дополнительные стили, не покрытые Tailwind.
+ * Основная стилизация через index.css и Tailwind классы в компонентах.
+ */
+
+/* Анимация skeleton-загрузки для placeholder-карточек */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #1a1d2e 25%, #252840 50%, #1a1d2e 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.5rem;
+}
+
+/* Кастомный скроллбар для тёмной темы */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d3148;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3d4168;
+}
+
+/* Фикс для select элементов в тёмной теме */
+select option {
+  background-color: #12141f;
+  color: #e2e8f0;
+}
+
+/* Плавная анимация для ECharts tooltip */
+.echarts-tooltip {
+  backdrop-filter: blur(8px) !important;
+}

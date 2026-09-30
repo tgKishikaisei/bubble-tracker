@@ -1,0 +1,7 @@
+# Трекер (bubble_tracker_pro.py). Встроенный API ставится из bubble-api/requirements.txt
+opencv-python>=4.10,<5
+numpy>=1.26,<3
+openpyxl>=3.1,<4
+Pillow>=10.4
+scipy>=1.13,<2
+-r bubble-api/requirements.txt
